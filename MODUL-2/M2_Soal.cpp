@@ -23,7 +23,7 @@ int main() {
     switch (pilihanStrategi){
         case ('a'):
             cout << "Naga menyemburkan api! Anda terluka." << endl;
-            cout << "Sisa perlindungan sihir: " << perlindunganSihir << " kali.";
+            cout << "Sisa perlindungan sihir: " << perlindunganSihir << " kali." << endl;
             perlindunganSihir--;
             break;
         case ('b'):
