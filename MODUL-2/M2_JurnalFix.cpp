@@ -11,6 +11,7 @@ int main () {
     }
     while (true){
         cout << "Piala api menyala! Anda terpilih sebagai Triwizard Champions." << endl;
+        system ("pause");
         system ("cls");
 
         //TUGAS 1
@@ -38,12 +39,13 @@ int main () {
                     system ("pause");
                 }
             }
-                if (perlindunganSihir == 0){
-                    cout << ">> KESEMPATAN HABIS! Anda ditarik keluar arena oleh pawang naga." << endl;
-                    cout << ">> MENGULANG TUGAS 1 DARI AWAL..." << endl;
-                    system("pause");
-                    system("cls");
-                }
+            
+            if (perlindunganSihir == 0){
+            cout << ">> KESEMPATAN HABIS! Anda ditarik keluar arena oleh pawang naga." << endl;
+            cout << ">> MENGULANG TUGAS 1 DARI AWAL..." << endl;
+            system("pause");
+            system("cls");
+            }
         }
         
         //TUGAS 2
@@ -113,15 +115,17 @@ int main () {
                 system ("pause");
                 system ("cls");
             }
+
             if (toleransi == 0){
-                cout << ">> KESEMPATAN HABIS! Labirin berubah bentuk dan menendang Anda ke pintu masuk." << endl;
-                cout << ">> MENGULANG TUGAS 3 DARI AWAL..." << endl;
-                system ("pause");
-                system ("cls");
+            cout << ">> KESEMPATAN HABIS! Labirin berubah bentuk dan menendang Anda ke pintu masuk." << endl;
+            cout << ">> MENGULANG TUGAS 3 DARI AWAL..." << endl;
+            system ("pause");
+            system ("cls");
             }else {
-                tugas3Selesai = true;
+            tugas3Selesai = true;
             }
-            //JALAN KELUAR
+        }
+        //JALAN KELUAR
             int angka;
             cout << "--- JALAN KELUAR ---" << endl;
             cout << "Anda melihat sesuatu yang bersinar di tengah arena..." << endl;
@@ -144,11 +148,11 @@ int main () {
                 cout << endl;
 
             }
-        }
-        cout << "*** SELAMAT! ANDA ADALAH PEMENANG TURNAMEN TRIWIZARD! ***" << endl;
-        system ("pause");
-        system ("cls");
-        break;
+            cout << "*** SELAMAT! ANDA ADALAH PEMENANG TURNAMEN TRIWIZARD! ***" << endl;
+            system ("pause");
+            system ("cls");
+
+    break;
     }
     return 0;
 }

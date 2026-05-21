@@ -151,6 +151,8 @@ int main(){
 
     cout << endl;
 
+    //TASK2
+
     cout << "[TASK 2/3] REPAIR TEXT CONSOLE - Captain's Bridge" << endl;
     cout << ">> Konsol teks mengalami interfensi kosmik." << endl;
     cout << ">> Verifikasi integritas data teks sebelum terlambat!" << endl << endl;
@@ -402,6 +404,7 @@ int main(){
     system ("cls");
     cout << endl;
 
+//task 3
     cout << "[ TASK 3/3 ] ALIGN NAVIGATION MATRIX - Engine Core" << endl;
     cout << ">> Sistem navigasi mati total akibat sabotase." << endl;
     cout << ">> Rekonstruksi matriks koordinat sekarang!" << endl << endl;
@@ -513,10 +516,5 @@ int main(){
     cout << "==========================================================================" << endl;
     cout << "  ALL TASK COMPLETE - SHIP SYSTEM RESTORED" << endl;
     cout << "==========================================================================" << endl;
-
-
-
-
-
     return 0;
 }
