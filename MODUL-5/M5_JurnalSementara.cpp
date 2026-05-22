@@ -61,6 +61,8 @@ void bannerGazacare (){
     cout << "==================================================" << endl;
     cout << "       SISTEM MANAJEMEN RS GAZACARE PLUS          " << endl;
     cout << "==================================================" << endl;
+    cout << "                          Tanggal " 
+         << 
     cout << "[1] Daftarkan Pasien Baru" << endl;
     cout << "[2] Lihat Semua Pasien" << endl;
     cout << "[3] Cari Pasien" << endl;
@@ -70,13 +72,13 @@ void bannerGazacare (){
     cout << "Pilihan: "; cin >> pilihanPasien;
     
     if (cin.fail()) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "[Gagal] Input harus berupa angka!\n";
-            pilihanPasien = -1;
-            system ("pause");
-            system ("cls");
-            continue;
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "[Gagal] Input harus berupa angka!\n";
+        pilihanPasien = -1;
+        system ("pause");
+        system ("cls");
+        continue;
         }  
     }
     if (pilihanPasien == 1){
