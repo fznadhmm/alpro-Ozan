@@ -235,26 +235,136 @@ void gitBranch(){
 }
 
 void gitCheckOut(){
-
+    bersihkanLayar();
+    cout << CYAN << "GITSIM - Git Simulator\n" << ABU << "Author: " << nama_penulis << RESET << "\n";
+    cout << "--------------------------------------------------------\n";
+    cout << "git checkout\n";
+    cout << "--------------------------------------------------------\n";
+    
+    cout << PUTIH << "Available branches:\n\n" << RESET;
+    for (int i = 0; i < active_repo->jumlah_branch; i++) {
+        if (i == active_repo->indeks_Activebranch) {
+            cout << HIJAU << "* " << active_repo->daftar_branch[i].nama << RESET << "\n";
+        } else {
+            cout << "  " << active_repo->daftar_branch[i].nama << "\n";
+        }
+    }
+    
+    cout << "\n" << CYAN << "Switch to branch: " << RESET;
+    string target_branch;
+    getline(cin, target_branch);
+    
+    bool ketemu = false;
+    for (int i = 0; i < active_repo->jumlah_branch; i++) {
+        if (active_repo->daftar_branch[i].nama == target_branch) {
+            ketemu = true;
+            if (i == active_repo->indeks_Activebranch) {
+                cout << KUNING << "\n[INFO] You are already on branch '" << target_branch << "'\n" << RESET;
+            } else {
+                active_repo->indeks_Activebranch = i;
+                cout << HIJAU << "\n[OK] " << RESET << "Switched to branch '" << target_branch << "'\n";
+            }
+            break;
+        }
+    }
+    
+    if (!ketemu) {
+        cout << MERAH << "\n[ERROR] Invalid branch!\n" << RESET;
+    }
+    jedaLayar();
 }
 
 void newRepository(){
+    bersihkanLayar();
+    cout << CYAN << "GITSIM - Git Simulator\n" << ABU << "Author: " << nama_penulis << RESET << "\n";
+    cout << "--------------------------------------------------------\n";
+    cout << "git init (new repository)\n";
+    cout << "--------------------------------------------------------\n";
+    
+    cout << CYAN << "New repository name: " << RESET;
+    string nama_repo_baru;
+    getline(cin, nama_repo_baru);
 
+    if (nama_repo_baru == "") {
+        nama_repo_baru = "repo-" + to_string(jumlah_repo + 1);
+    }
+
+    for (int i = 0; i < jumlah_repo; i++) {
+        if (daftar_repo[i]->nama == nama_repo_baru) {
+            cout << MERAH << "\n[ERROR] Repository '" << nama_repo_baru << "' already exists!\n" << RESET;
+            jedaLayar();
+            return;
+        }
+    }
+
+    Repository* repo_baru = new Repository();
+    repo_baru->nama = nama_repo_baru;
+    initialize_mainbranch (repo_baru);
+
+    Repository** array_repo_baru = new Repository*[jumlah_repo + 1];
+    
+    for (int i = 0; i < jumlah_repo; i++) {
+        array_repo_baru[i] = daftar_repo[i];
+    }
+    array_repo_baru[jumlah_repo] = repo_baru;
+    
+    delete[] daftar_repo;
+    daftar_repo = array_repo_baru;
+
+    indeks_Activerepo = jumlah_repo;
+    active_repo = daftar_repo[indeks_Activerepo];
+    jumlah_repo++;
+    
+    cout << HIJAU << "\n[OK] " << RESET << "Repository '" << active_repo->nama << "' created and set as active.\n";
+    cout << "On branch: " << HIJAU << "main\n" << RESET;
+    jedaLayar();
 }
 
 void switchRepository(){
-    
+    bersihkanLayar();
+    cout << CYAN << "GITSIM - Git Simulator\n" << ABU << "Author: " << nama_penulis << RESET << "\n";
+    cout << "--------------------------------------------------------\n";
+    cout << "switch repository\n";
+    cout << "--------------------------------------------------------\n";
+
+    for(int i = 0; i < jumlah_repo; i++){
+        Branch* b_aktif = &daftar_repo[i]->daftar_branch[daftar_repo[i]->indeks_Activebranch];
+
+        if (i == indeks_Activerepo){
+            cout << HIJAU << "* [" << (i + 1) << "] " << daftar_repo[i]->nama;
+            cout << ABU << " (" << daftar_repo[i]->jumlah_branch << " branch, ";
+            cout << b_aktif->total_commit << " commits at HEAD)\n" << RESET;
+        } else {
+            cout << "  [" << (i + 1) << "] " << daftar_repo[i]->nama;
+            cout << ABU << " (" << daftar_repo[i]->jumlah_branch << " branch, ";
+            cout << b_aktif->total_commit << " commits at HEAD)\n" << RESET;
+        }
+    }
+    cout << "\n" << CYAN << "Select repository number: " << RESET;
+    int pilihan_repo;
+    cin >> pilihan_repo;
+
+    if (cin.fail() || pilihan_repo < 1 || pilihan_repo > jumlah_repo) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << MERAH << "\n[ERROR] Invalid repository number!\n" << RESET;
+        jedaLayar();
+        return;
+    }
+    cin.ignore(1000, '\n');
+
+    indeks_Activerepo = pilihan_repo - 1;
+    active_repo = daftar_repo [indeks_Activerepo];
+
+    Branch* branch_sekarang = &active_repo->daftar_branch[active_repo->indeks_Activebranch];
+
+    cout << HIJAU << "\n[OK] " << RESET << "Switched to repository '" << active_repo->nama << "'\n";
+    cout << "HEAD: " << HIJAU << branch_sekarang->nama << "\n" << RESET;
+    jedaLayar();
+
 }
 
-
-
-
-
-
-
-
-
-int main(int argc, char **argv){
+int main(int argc, char* argv[]){
     if (argc < 2){
         cout << MERAH << "Error: Requires an Operator name (username)." << RESET << "\n";
         cout << "Usage: ./gitsim <username>\n";
@@ -262,6 +372,26 @@ int main(int argc, char **argv){
     }
     nama_penulis = argv[1];
     bersihkanLayar();
+
+    cout << CYAN << "GITSIM - Lightweight Git Simulator\n";
+    cout << ABU << "Author: " << PUTIH << nama_penulis << "\n";
+    cout << ABU << "--------------------------------------------------------\n" << RESET;
+    cout << "git init\n";
+    cout << ABU << "--------------------------------------------------------\n" << RESET;
+
+    Repository* repo_awal = new Repository ();
+    cout << CYAN << "Repository name: " << RESET;
+    getline(cin, repo_awal->nama);
+
+    if (repo_awal->nama == " "){
+        repo_awal->nama = "my-repo";
+    }
+
+    initialize_mainbranch(repo_awal);
+
+    daftar_repo = new Repository* [1];
+    daftar_repo[0] = repo_awal;
+
 
  return 0;   
 }
