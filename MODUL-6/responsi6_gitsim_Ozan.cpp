@@ -391,6 +391,7 @@ int main(int argc, char* argv[]){
 
     daftar_repo = new Repository* [1];
     daftar_repo[0] = repo_awal;
+    jumlah_repo = 1;
 
 
  return 0;   
