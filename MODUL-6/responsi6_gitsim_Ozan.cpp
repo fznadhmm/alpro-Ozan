@@ -98,9 +98,7 @@ void bersihkanSemuaMemori() {
     }
     delete[] daftar_repo;
 }
-//end of commit or push pertama
 
-//start
 void gitCommit(){
     bersihkanLayar();
     Branch* branch_aktif = &active_repo->daftar_branch[active_repo->indeks_Activebranch];
@@ -392,6 +390,59 @@ int main(int argc, char* argv[]){
     daftar_repo = new Repository* [1];
     daftar_repo[0] = repo_awal;
     jumlah_repo = 1;
+    indeks_Activerepo = 0;
+    active_repo = daftar_repo[indeks_Activerepo];
+
+    cout << "\n[" << HIJAU << "OK" << RESET << "] Initialized empty repository: " << active_repo->nama << "\n";
+    cout << "On branch: " << HIJAU << "main\n" << RESET;
+    jedaLayar();
+
+    int pilihan;
+    while (true){
+        bersihkanLayar();
+        Branch* branch_aktif = &active_repo->daftar_branch[active_repo->indeks_Activebranch];
+        cout << CYAN << "GITSIM - Git Simulator\n" << RESET;
+        cout << ABU << "Author : " << PUTIH << nama_penulis 
+             << ABU << " | Repo: " << PUTIH << active_repo->nama 
+             << ABU << " | HEAD: " << HIJAU << branch_aktif->nama 
+             << ABU << " | [" << PUTIH << (indeks_Activerepo + 1) << "/" << jumlah_repo << ABU << "]\n" << RESET;
+        cout << "--------------------------------------------------------\n";
+        cout << "[1] git commit\n[2] git log\n[3] git branch\n[4] git checkout\n";
+        cout << "[5] new repository\n[6] switch repository\n[0] exit\n";
+        cout << "--------------------------------------------------------\n> ";
+        
+        cin >> pilihan;
+
+        if (cin.fail() || pilihan < 0 || pilihan > 6) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            continue;
+        }
+        cin.ignore(1000, '\n');
+
+        if (pilihan == 0) {
+            bersihkanSemuaMemori(); // Eksekusi Garbage Collector sebelum mati
+            cout << CYAN << "\nSession Ended\n" << ABU << "Author : " << PUTIH << nama_penulis << "\n";
+            cout << HIJAU << "Goodbye!\n" << RESET;
+            break;
+        }
+        
+        switch (pilihan) {
+            case 1: gitCommit(); 
+            break;
+            case 2: gitLog();
+            break;
+            case 3: gitBranch();
+            break;
+            case 4: gitCheckOut();
+            break;
+            case 5: newRepository();
+            break;
+            case 6: switchRepository();
+            break;
+        }
+    }
+    
 
 
  return 0;   
